@@ -1,0 +1,11 @@
+{
+  "Customer": {
+    "dbConfig": {
+      "host": "localhost",
+      "port": ["PORT"],
+      "dbName": ["DB_NAME"]
+    }
+  },
+  "mongoURI": ["MONGO_URI"],
+  "jwtSecret": ["JWT_SECRET"]
+}
