@@ -9,7 +9,7 @@ const ShoppingList = (props) => {
   const {getItems, deleteItem, item} = props;
   useEffect(() => {
     getItems();
-  }, []);
+  }, [getItems]);
 
   const {items} = item;
 
