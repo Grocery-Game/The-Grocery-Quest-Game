@@ -9,8 +9,8 @@ router.get('/', (req, res) => {
     res.json(map);
 });
 
-const mapHeight = 10;
-const mapWidth = 10;
+const mapHeight = 15;
+const mapWidth = 15;
 const maxLength = 12;
 
 generateMap = () => {
@@ -36,7 +36,7 @@ generateMap = () => {
         let x = position[0] + whereTo[0];
         let y = position[1] + whereTo[1];
 
-        if (x >= 0 && y >= 0 && !visited.includes([x, y].toString())) {
+        if (x >= 0 && y >= 0 && x <= mapWidth && y <= mapHeight && !visited.includes([x, y].toString())) {
             position = [x, y];
             map.push(position);
             visited.push(position.toString());
