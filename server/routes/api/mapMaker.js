@@ -41,36 +41,19 @@ generateMap = () => {
         let x = position[0] + whereTo[0];
         let y = position[1] + whereTo[1];
 
-        let notSurrounded = true;
-        
-        if (visited.length >= 7) {
-            notSurrounded = checkSurrounding(visited, [x, y]);
-        }
 
-        if (x >= 0 && y >= 0 && x <= mapWidth && y <= mapHeight 
-            && !visited.includes([x, y].toString()) && notSurrounded) {
+
+        if (x >= 0 && y >= 0 && x <= mapWidth && y <= mapHeight) {
             position = [x, y];
-            map.push(position);
-            visited.push(position.toString());
+
+            if (!visited.includes([x, y].toString())) {
+                map.push(position);
+                visited.push(position.toString());
+            }
         }
     }
     
     return defineConnections(map, visited, generateRoomTypes(maxLength));
-}
-
-checkSurrounding = ( visited, position ) => {
-    return !(checkDirections(position, above, visited) 
-        && checkDirections(position, right, visited) 
-        && checkDirections(position, bottom, visited) 
-        && checkDirections(position, left, visited));
-
-}
-
-checkDirections = ( position, direction, visited ) => {
-    x = position[0] + direction[0];
-    y = position[1] + direction[1];
-
-    return visited.includes([x, y].toString());
 }
 
 generateRoomTypes = (maxLength) => {
