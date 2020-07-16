@@ -13,6 +13,11 @@ const mapHeight = 15;
 const mapWidth = 15;
 const maxLength = 12;
 
+const above = [-1, 0];
+const right = [0, 1];
+const bottom = [1, 0];
+const left = [0, -1];
+
 generateMap = () => {
     
     let visited = [];
@@ -36,7 +41,14 @@ generateMap = () => {
         let x = position[0] + whereTo[0];
         let y = position[1] + whereTo[1];
 
-        if (x >= 0 && y >= 0 && x <= mapWidth && y <= mapHeight && !visited.includes([x, y].toString())) {
+        let notSurrounded = true;
+        
+        if (visited.length >= 7) {
+            notSurrounded = checkSurrounding(visited, [x, y]);
+        }
+
+        if (x >= 0 && y >= 0 && x <= mapWidth && y <= mapHeight 
+            && !visited.includes([x, y].toString()) && notSurrounded) {
             position = [x, y];
             map.push(position);
             visited.push(position.toString());
@@ -44,6 +56,21 @@ generateMap = () => {
     }
     
     return defineConnections(map, visited, generateRoomTypes(maxLength));
+}
+
+checkSurrounding = ( visited, position ) => {
+    return !(checkDirections(position, above, visited) 
+        && checkDirections(position, right, visited) 
+        && checkDirections(position, bottom, visited) 
+        && checkDirections(position, left, visited));
+
+}
+
+checkDirections = ( position, direction, visited ) => {
+    x = position[0] + direction[0];
+    y = position[1] + direction[1];
+
+    return visited.includes([x, y].toString());
 }
 
 generateRoomTypes = (maxLength) => {
@@ -104,52 +131,49 @@ defineConnections = (coordinates, stringOfCoordinates, typeIds) => {
 getDirection = (direction, obj, coordinates, stringOfCoordinates, typeIds, i) => {
 
     //the 3 arrays are correlated by the array index
-    const up = [-1, 0];
-    const right = [0, 1];
-    const bottom = [1, 0];
-    const left = [0, -1];
+    let index;
 
     switch(direction) {
         case 'above': 
-            let ax = coordinates[i][0] + up[0];
-            let ay = coordinates[i][1] + up[1];
+            index = indexOfCords(coordinates[i], stringOfCoordinates, above);
 
-            let aVal = stringOfCoordinates.indexOf([ax, ay].toString());
-            if (aVal != -1) {
-                obj[typeIds[i]].above = typeIds[aVal];
-            };
-            
+            if (index != -1) {
+                obj[typeIds[i]].above = typeIds[index];
+            }
+
             break;
         case 'right':
-            let rx = coordinates[i][0] + right[0];
-            let ry = coordinates[i][1] + right[1];
+            index = indexOfCords(coordinates[i], stringOfCoordinates, right);
 
-            let rVal = stringOfCoordinates.indexOf([rx, ry].toString());
-            if (rVal != -1) {
-                obj[typeIds[i]].right = typeIds[rVal];
-            };
-    
+            if (index != -1) {
+                obj[typeIds[i]].right = typeIds[index];
+            }
             break;
         case 'bottom':
-            let bx = coordinates[i][0] + bottom[0];
-            let by = coordinates[i][1] + bottom[1];
+            index = indexOfCords(coordinates[i], stringOfCoordinates, bottom);
 
-            let bVal = stringOfCoordinates.indexOf([bx, by].toString());
-            if (bVal != -1) {
-                obj[typeIds[i]].bottom = typeIds[bVal];
+            if (index != -1) {
+                obj[typeIds[i]].bottom = typeIds[index];
             }
-            break;
-        case 'left':
-            let lx = coordinates[i][0] + left[0];
-            let ly = coordinates[i][1] + left[1];
 
-            let lVal = stringOfCoordinates.indexOf([lx, ly].toString());
-            if (lVal != -1) {
-                obj[typeIds[i]].left = typeIds[lVal];
-            }
             break;
+        // left 
         default:
+            index = indexOfCords(coordinates[i], stringOfCoordinates, left);
+
+            if (index != -1) {
+                obj[typeIds[i]].left = typeIds[index];
+            }
+            break;
+
     }
-} 
+}
+
+indexOfCords = ( coordinates, stringOfCoordinates, direction ) => {
+    let x = coordinates[0] + direction[0];
+    let y = coordinates[1] + direction[1];
+
+    return stringOfCoordinates.indexOf([x, y].toString());
+}  
 
 module.exports = router;
