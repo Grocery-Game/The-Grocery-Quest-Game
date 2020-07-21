@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const config = require('config');
+
 const app = express();
 
 // BodyParser Middleware
@@ -24,6 +25,7 @@ mongoose
 app.use('/api/items', require('./routes/api/items'));
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/auth', require('./routes/api/auth'));
+app.use('/api/mapMaker', require('./routes/api/mapMaker'));
 
 const port = process.env.PORT || config.get('Customer.dbConfig.port');
 
