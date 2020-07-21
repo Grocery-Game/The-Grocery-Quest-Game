@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-// @route  GET api/map
+// @route  GET api/mapMaker
 // @desc   Get a randomly generated map
 // @access Public
 router.get('/', (req, res) => {
