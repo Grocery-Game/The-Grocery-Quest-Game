@@ -62,27 +62,28 @@ generateRoomTypes = (maxLength) => {
     let tricks = Math.round(maxLength * 0.2);
     let ingredients = 4;
     let specialItems = Math.round(maxLength * 0.2);
-
     //p = path, t = traps, 
     //i = ingredient, s = special item
     //b = beginning, e = end/checkout
-    const types = ['p', 't', 'i', 's', 'b', 'e']; 
+    const rooms = {
+                'b' : 1,
+                'e' : 1,
+                't' : tricks,
+                'i' : ingredients,
+                's' : specialItems,
+                'p' : maxLength - (tricks + ingredients + specialItems + 2)
+            };
+
     let listOfRoomTypes = [];
 
-    listOfRoomTypes.push(types[4]);
-    listOfRoomTypes.push(types[5]);
-
-    for (i = 2; i < tricks + 2; i++) {
-        listOfRoomTypes.push(types[1] + i);
-    }
-    for (i = 2 + tricks; i < ingredients + 2 + tricks; i++) {
-        listOfRoomTypes.push(types[2] + i);
-    }
-    for (i = 2 + tricks + ingredients; i < specialItems + 2 + tricks + ingredients; i++) {
-        listOfRoomTypes.push(types[3] + i);
-    }
-    for (i = listOfRoomTypes.length; i < maxLength; i++) {
-        listOfRoomTypes.push(types[0] + listOfRoomTypes.length);
+    for (const [key, value] of Object.entries(rooms)) {
+        for(i = 0; i < value; i++) {
+            if (key === 'b' || key === 'e') {
+                listOfRoomTypes.push(key);
+            } else {
+                listOfRoomTypes.push(key + i);
+            }
+        }
     }
 
     //shuffles the array to randomize
