@@ -5,23 +5,23 @@ const initialState = {
   loading: false
 };
 
-export default function (state = initialState, action) {
-  switch(action.type) {
+export default function (state = initialState, {type, payload}) {
+  switch(type) {
     case GET_ITEMS:
       return {
         ...state,
-        items: action.payload,
+        items: payload,
         loading: false
       }
     case DELETE_ITEM: 
       return {
         ...state,
-        items: state.items.filter(item => item._id !== action.payload)
+        items: state.items.filter(item => item._id !== payload)
       }
     case ADD_ITEM: 
       return {
         ...state,
-        items: [action.payload, ...state.items]}
+        items: [payload, ...state.items]}
     case ITEMS_LOADING:
       return {
         ...state,

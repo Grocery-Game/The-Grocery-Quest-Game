@@ -27,10 +27,10 @@ function App() {
     <Provider store={store}>
       <div className="App">
         <AppNavbar/>
-        <MiniMap/>
         <Container>
           <ItemModal/>
           <ShoppingList/>
+          <MiniMap />
         </Container>
       </div>
     </Provider>

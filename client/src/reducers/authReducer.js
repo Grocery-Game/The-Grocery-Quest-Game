@@ -7,8 +7,8 @@ const initialState = {
   user: null
 }
 
-export default function (state = initialState, action) {
-  switch (action.type) {
+export default function (state = initialState, {type, payload}) {
+  switch (type) {
     case USER_LOADING:
       return {
         ...state,
@@ -19,14 +19,14 @@ export default function (state = initialState, action) {
         ...state,
         isAuthenticated: true,
         isLoading: false,
-        user: action.payload
+        user: payload
       };
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
       localStorage.setItem('token', action.payload.token);
       return {
         ...state,
-        ...action.payload, // includes user and token
+        ...payload, // includes user and token
         isAuthenticated: true,
         isLoading: false,
       };
