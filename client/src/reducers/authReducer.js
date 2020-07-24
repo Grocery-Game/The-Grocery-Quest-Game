@@ -23,6 +23,7 @@ export default function (state = initialState, {type, payload}) {
       };
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
+      localStorage.setItem('token', payload.token);
       return {
         ...state,
         ...payload, // includes user and token
