@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import {
   Button,
   Modal,
@@ -11,23 +11,21 @@ import {
   NavLink,
   Alert
 } from 'reactstrap';
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import PropTypes from 'prop-types';
-import { register } from '../../actions/authActions';
-import { clearErrors } from '../../actions/errorActions';
+import { login } from "../../actions/authActions";
+import { clearErrors } from "../../actions/errorActions";
 
-
-const RegisterModule = ({ error, isAuthenticated, register, clearErrors }) => {
+const LoginModal = ({ error, isAuthenticated, login, clearErrors }) => {
   const [state, setState] = useState({
     modal: false,
-    name: '',
     email: '',
     password: '',
     msg: null
   });
 
   useEffect(() => {
-    if (error.id === 'REGISTER_FAIL') {
+    if (error.id === 'LOGIN_FAIL') {
       setState((state) => ({ ...state, msg: error.msg.msg }));
     } else {
       setState((state) => ({ ...state, msg: null }));
@@ -58,40 +56,29 @@ const RegisterModule = ({ error, isAuthenticated, register, clearErrors }) => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const { name, email, password } = state;
+    const { email, password } = state;
 
-    // create user project
-    const newUser = {
-      name,
+    const user = {
       email,
       password
     }
 
-    // attempt to register
-    register(newUser);
+    // attempt to login
+    login(user)
   };
 
   return (
     <div>
       <NavLink onClick={toggle} href="#">
-        Register
+        Login
       </NavLink>
 
       <Modal isOpen={state.modal} toggle={toggle}>
-        <ModalHeader toggle={toggle}>Register</ModalHeader>
+        <ModalHeader toggle={toggle}>Login</ModalHeader>
         <ModalBody>
           {state.msg && <Alert color="danger">{state.msg}</Alert>}
           <Form onSubmit={onSubmit}>
             <FormGroup>
-              <Label for="name">Name</Label>
-              <Input
-                type="text"
-                name="name"
-                id="name"
-                placeholder="Name"
-                className="mb-3"
-                onChange={onChange}
-              />
               <Label for="email">Email</Label>
               <Input
                 type="text"
@@ -117,7 +104,7 @@ const RegisterModule = ({ error, isAuthenticated, register, clearErrors }) => {
                 block
                 type="submit"
               >
-                Register
+                Login
               </Button>
             </FormGroup>
           </Form>
@@ -127,16 +114,16 @@ const RegisterModule = ({ error, isAuthenticated, register, clearErrors }) => {
   );
 };
 
-RegisterModule.protoTypes = {
+LoginModal.protoTypes = {
   isAuthenticated: PropTypes.bool,
   error: PropTypes.object.isRequired,
-  register: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired
-};
+}
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error
 });
 
-export default connect(mapStateToProps, { register, clearErrors })(RegisterModule);
+export default connect(mapStateToProps, {login, clearErrors})(LoginModal)
