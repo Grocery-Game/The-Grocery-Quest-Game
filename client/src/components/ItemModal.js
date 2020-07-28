@@ -2,8 +2,10 @@ import React, {useState} from 'react';
 import {Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input} from 'reactstrap';
 import {connect} from 'react-redux';
 import {addItem} from '../actions/itemActions';
+import PropTypes from 'prop-types';
 
-const ItemModal = (props) => {
+const ItemModal = ({addItem, isAuthenticated}) => {
+  console.log(isAuthenticated)
   const [state, setState] = useState({
     modal: false,
     name: '',
@@ -27,7 +29,7 @@ const ItemModal = (props) => {
     };
 
     // add via add item action
-    props.addItem(newItem);
+    addItem(newItem);
 
     // close modal
     toggle();
@@ -35,9 +37,14 @@ const ItemModal = (props) => {
 
   return (
     <div>
-      <Button color="dark" style={{ marginBottom: '2rem' }} onClick={toggle}>
-        Add Item
-      </Button>
+      {
+        isAuthenticated ? 
+        <Button color="dark" style={{ marginBottom: '2rem' }} onClick={toggle}>
+          Add Item
+        </Button> :
+        <h4 className="mb-3 ml-4">Please Login</h4>
+      }
+   
 
       <Modal isOpen={state.modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Add to Shopping List</ModalHeader>
@@ -68,8 +75,14 @@ const ItemModal = (props) => {
   );
 };
 
+ItemModal.propTypes = {
+  isAuthenticated: PropTypes.bool,
+  addItem: PropTypes.func.isRequired
+}
+
 const mapStateToProps = state => ({
-  item: state.item
+  item: state.item,
+  isAuthenticated: state.auth.isAuthenticated
 })
 
-export default connect(mapStateToProps, {addItem})(ItemModal);
+export default connect(mapStateToProps, { addItem })(ItemModal);

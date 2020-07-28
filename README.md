@@ -7,15 +7,22 @@ MERN Stack grocery shopping game.
 ## 🍓 Quick start 🍉
 1.  **Setup Config.**
     
-    Inside of ./config create a default.json file
-    Copy contents of placeholder-default.json into your new default.json file
-    Update the following fields:
+    1. Inside of ./config create a config.env file
+    2. Copy the text below into your config.env file
+    
+        PORT = <PORT>
+        MONGO_URI = <MONGO_URI>
+        JWT_SECRET = <JWT_SECRET>
 
-    "port": ["PORT"], -> 5000 
-    "dbName": ["DB_NAME"] -> name of database you created on mongoAtlas 
-    "mongoURI": ["MONGO_URI"], -> use the "connect" option on your database on mongoAtlas to obtain your mongoURI
-    "jwtSecret": ["JWT_SECRET"] -> create any secret phrase for Json Web Tokens, example "super-Secret-987"
-}
+    3. Update the following fields:
+
+        PORT = ["PORT"], -> 5000 
+        MONGO_URI = ["MONGO_URI"], -> use the "connect" option on your database on mongoAtlas to obtain your mongoURI
+        JWT_SECRET = ["JWT_SECRET"] -> create any secret phrase for Json Web Tokens, example "super-Secret-987"
+
+    4. save config.env
+    5. for more detailed instructions and examples refer to the README.md inside of ./config folder
+
 
 2.  **Start developing.**
 
