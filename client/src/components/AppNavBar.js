@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import RegisterModule from './auth/RegisterModal';
 import LoginModal from './auth/LoginModal';
 import Logout from './auth/Logout';
@@ -14,10 +13,11 @@ import {
   Container,
 } from 'reactstrap';
 
-const AppNavBar = ({auth}) => {
+const AppNavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { isAuthenticated, user } = auth;
+  const { user } = useSelector(state => state.auth);
+  const { isAuthenticated } = useSelector(state => state.auth);
 
   const authLinks = (
     <>
@@ -58,12 +58,4 @@ const AppNavBar = ({auth}) => {
   );
 };
 
-AppNavBar.propTypes = {
-  auth: PropTypes.object.isRequired
-}
-
-const mapStateToProps = (state) => ({
-  auth: state.auth
-});
-
-export default connect(mapStateToProps, null)(AppNavBar);
+export default AppNavBar;
