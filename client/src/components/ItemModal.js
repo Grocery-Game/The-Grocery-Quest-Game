@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import {Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input} from 'reactstrap';
-import {connect} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {addItem} from '../actions/itemActions';
-import PropTypes from 'prop-types';
 
-const ItemModal = ({addItem, isAuthenticated}) => {
-  console.log(isAuthenticated)
+const ItemModal = () => {
+  const dispatch = useDispatch();
+  const { isAuthenticated } = useSelector(state => state.auth);
   const [state, setState] = useState({
     modal: false,
     name: '',
@@ -28,8 +28,9 @@ const ItemModal = ({addItem, isAuthenticated}) => {
       name: state.name
     };
 
-    // add via add item action
-    addItem(newItem);
+    // add via add item action    
+    dispatch(addItem(newItem));
+
 
     // close modal
     toggle();
@@ -75,14 +76,4 @@ const ItemModal = ({addItem, isAuthenticated}) => {
   );
 };
 
-ItemModal.propTypes = {
-  isAuthenticated: PropTypes.bool,
-  addItem: PropTypes.func.isRequired
-}
-
-const mapStateToProps = state => ({
-  item: state.item,
-  isAuthenticated: state.auth.isAuthenticated
-})
-
-export default connect(mapStateToProps, { addItem })(ItemModal);
+export default ItemModal;
