@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import axios from 'axios';
 const MAP_ENDPOINT = "/api/mapMaker";
 
 const getMap = () => {
@@ -11,9 +10,10 @@ const getMap = () => {
 };
 
 const MiniMap = () => {
+  const [map, setMap] = useState({});
 
   useEffect(() => {
-    getMap();
+    // getMap()
   });
 
   return(
