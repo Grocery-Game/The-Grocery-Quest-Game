@@ -1,18 +1,24 @@
 const express = require('express');
 const path = require('path');
-const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 
-// load config
-dotenv.config({ path: './config/config.env' });
+
+if(process.env.NODE_ENV === 'development') {
+  // load config
+  const dotenv = require('dotenv');
+  dotenv.config({ path: './config/config.env' });
+}
 
 // connect to DB
 connectDB();
 
 const app = express();
 
+const middlewares = [
+  express.json(),
+]
 // BodyParser Middleware
-app.use(express.json());
+app.use(middlewares);
 
 // Use Routes
 app.use('/api/items', require('./routes/api/items'));

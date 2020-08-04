@@ -17,3 +17,9 @@ export const REGISTER_FAIL = 'REGISTER_FAIL';
 // error
 export const GET_ERRORS = 'GET_ERRORS';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+
+// map
+export const MOVE_ABOVE = 'MOVE_ABOVE';
+export const MOVE_RIGHT = 'MOVE_RIGHT';
+export const MOVE_BOTTOM = 'MOVE_BOTTOM';
+export const MOVE_LEFT = 'MOVE_LEFT';
